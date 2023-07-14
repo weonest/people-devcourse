@@ -27,5 +27,4 @@ public class Order {
         this.orderStatus = orderStatus;
         this.createdAt = createdAt;
     }
-
 }
