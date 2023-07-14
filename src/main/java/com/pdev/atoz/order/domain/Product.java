@@ -23,7 +23,7 @@ public class Product {
     private Category category;
 
     @Column(name = "price", nullable = false)
-    private long price;
+    private int price;
 
     @Column(name = "description")
     private String description;
@@ -39,7 +39,7 @@ public class Product {
     @Builder
     public Product(String productName,
                    Category category,
-                   long price,
+                   int price,
                    String description,
                    LocalDateTime createdAt) {
         this.productName = productName;

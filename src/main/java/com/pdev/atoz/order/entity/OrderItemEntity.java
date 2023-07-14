@@ -18,14 +18,15 @@ public class OrderItemEntity {
     private long id;
 
     @NotNull
-    @JoinColumn(name = "order_id")
+    @Column(name = "order_id")
     private long orderId;
 
     @NotNull
-    @JoinColumn(name = "product_id")
+    @Column(name = "product_id")
     private long productId;
 
     @NotNull
+    @Column(name = "category")
     private String category;
 
     @NotNull

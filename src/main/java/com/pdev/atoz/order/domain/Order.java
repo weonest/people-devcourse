@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 public class Order {
@@ -13,14 +12,14 @@ public class Order {
     private final String address;
     private final OrderStatus orderStatus;
     private final LocalDateTime createdAt;
-    private final List<OrderItem> orderItems;
+    private final OrderItems orderItems;
 
     @Builder
     private Order(Email email,
                  String address,
                  OrderStatus orderStatus,
                  LocalDateTime createdAt,
-                 List<OrderItem> orderItems) {
+                 OrderItems orderItems) {
         this.email = email;
         this.address = address;
         this.orderItems = orderItems;
