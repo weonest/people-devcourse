@@ -8,9 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 public class OrderItem {
 
-    private Order order;
-
-    private Product product;
+    private long productId;
 
     private Category category;
 
@@ -21,19 +19,16 @@ public class OrderItem {
     private LocalDateTime createdAt;
 
     @Builder
-    private OrderItem(Order order,
-                      Product product,
+    private OrderItem(long productId,
                       Category category,
                       int quantity,
                       int price,
                       LocalDateTime createdAt) {
-        this.order = order;
-        this.product = product;
+        this.productId = productId;
         this.category = category;
         this.quantity = quantity;
-        this.totalPrice = product.getPrice() * quantity;
+        this.totalPrice = price * quantity;
         this.createdAt = createdAt;
     }
-
 
 }

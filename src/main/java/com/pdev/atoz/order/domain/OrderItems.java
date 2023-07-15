@@ -10,7 +10,7 @@ public class OrderItems {
 
     private final List<OrderItem> orderItemList = new ArrayList<>();
 
-    public void addItem(OrderItem... items) {
+    public void addItem(List<OrderItem> items) {
         for (OrderItem item : items) {
             orderItemList.add(item);
         }

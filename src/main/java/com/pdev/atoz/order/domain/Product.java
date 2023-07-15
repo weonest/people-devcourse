@@ -1,6 +1,7 @@
 package com.pdev.atoz.order.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,24 +16,26 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "product_name", nullable = false)
+    @NotNull
+    @Column(name = "product_name")
     private String productName;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "Category", nullable = false)
+    @Column(name = "Category")
     private Category category;
 
-    @Column(name = "price", nullable = false)
+    @NotNull
+    @Column(name = "price")
     private int price;
 
     @Column(name = "description")
     private String description;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false)
+    @NotNull
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 

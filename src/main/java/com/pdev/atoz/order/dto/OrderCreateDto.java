@@ -1,7 +1,12 @@
 package com.pdev.atoz.order.dto;
 
+import com.pdev.atoz.order.domain.OrderItem;
+
+import java.util.List;
+
 public record OrderCreateDto (
         String email,
-        String address
+        String address,
+        List<OrderItem> orderItemList
 ){
 }

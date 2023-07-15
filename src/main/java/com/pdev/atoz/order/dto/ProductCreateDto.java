@@ -5,7 +5,7 @@ import com.pdev.atoz.order.domain.Category;
 public record ProductCreateDto(
         String productName,
         Category category,
-        long price,
+        int price,
         String description
 ) {
 }
