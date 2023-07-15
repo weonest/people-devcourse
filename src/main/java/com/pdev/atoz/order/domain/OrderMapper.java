@@ -37,4 +37,24 @@ public class OrderMapper {
                 orderEntity.getOrderStatus(),
                 orderEntity.getCreatedAt());
     }
+
+    public static Order convertEntityToDomain(OrderEntity orderEntity) {
+        Email email = new Email(orderEntity.getEmail());
+        OrderStatus orderStatus = OrderStatus.valueOf(orderEntity.getOrderStatus());
+        return Order.builder()
+                .email(email)
+                .address(orderEntity.getAddress())
+                .orderStatus(orderStatus)
+                .createdAt(orderEntity.getCreatedAt())
+                .build();
+    }
+
+    public static OrderEntity convertDomainToEntity(Order order) {
+        return OrderEntity.builder()
+                .email(order.getEmail().getMailAddress())
+                .address(order.getAddress())
+                .orderStatus(order.getOrderStatus().toString())
+                .createdAt(order.getCreatedAt())
+                .build();
+    }
 }

@@ -39,4 +39,11 @@ public class OrderServiceImpl implements OrderService {
         });
         return OrderMapper.convertEntityToResponse(orderEntity);
     }
+
+    public void cancelOrder(long orderId) {
+        OrderEntity orderEntity = orderRepository.findById(orderId).get();
+        Order order = OrderMapper.convertEntityToDomain(orderEntity);
+        order.cancel();
+        orderRepository.updateOrderStatus(order.getOrderStatus().toString(), orderEntity.getId());
+    }
 }
