@@ -1,17 +1,13 @@
 package com.pdev.atoz.order.repository;
 
 import com.pdev.atoz.order.domain.*;
-import jakarta.persistence.EntityManager;
+import com.pdev.atoz.product.domain.Product;
+import com.pdev.atoz.product.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class OrderItemRepositoryTest {
@@ -23,16 +19,21 @@ class OrderItemRepositoryTest {
     OrderRepository orderRepository;
 
     @Autowired
-    EntityManager em;
+    ProductRepository productRepository;
 
-    @Test
-    void test() {
-        Email geonhee = new Email("geonhee");
-        OrderItem orderItem2 = new OrderItem(null, null, Category.FOOD, 3, LocalDateTime.now());
-        List<OrderItem> list = new ArrayList<>(List.of(orderItem2));
-        Order order = new Order(geonhee, "gd", list, OrderStatus.READY_FOR_DELIVERY, LocalDateTime.now());
-        Product product = new Product("밥", Category.FOOD, 100, "good", LocalDateTime.now());
-        OrderItem orderItem = new OrderItem(order, product, product.getCategory(), 3, LocalDateTime.now());
-        orderItemRepository.save(orderItem);
-    }
+    //containsExactly
+//    @ParameterizedTest(name = "move 메서드는 값을 입력받아 4이상인 경우 전진한다. 초기 위치: 0 입력값: {0} 동작 후 위치: {1}")
+//    @CsvSource(value = {"4,1", "3,0"})
+//    @Test
+//    void test() {
+//        Email geonhee = new Email("geonhee");
+//        Order order = new Order(geonhee, "gd", null, OrderStatus.READY_FOR_DELIVERY, LocalDateTime.now());
+//        orderRepository.save(order);
+//
+//        Product product = new Product("밥", Category.FOOD, 100, "good", LocalDateTime.now());
+//        productRepository.save(product);
+//
+//        OrderItem orderItem = new OrderItem(order, product, product.getCategory(), 3, LocalDateTime.now());
+//        orderItemRepository.save(orderItem);
+//    }
 }
