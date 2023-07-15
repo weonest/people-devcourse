@@ -18,6 +18,10 @@ public class OrderEntity {
     private long id;
 
     @NotNull
+    @Column(name = "email")
+    private String email;
+
+    @NotNull
     @Column(name = "address")
     private String address;
 
@@ -30,10 +34,11 @@ public class OrderEntity {
     private LocalDateTime createdAt;
 
     @Builder
-    private OrderEntity(long id, @NotNull String address, @NotNull String orderStatus, @NotNull LocalDateTime createdAt) {
-        this.id = id;
+    private OrderEntity(@NotNull String email, @NotNull String address, @NotNull String orderStatus, @NotNull LocalDateTime createdAt) {
+        this.email = email;
         this.address = address;
         this.orderStatus = orderStatus;
         this.createdAt = createdAt;
     }
+
 }
