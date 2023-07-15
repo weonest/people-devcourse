@@ -10,17 +10,13 @@ public class OrderItems {
 
     private final List<OrderItem> orderItemList = new ArrayList<>();
 
+    private int totalPrice;
+
     public void addItem(List<OrderItem> items) {
         for (OrderItem item : items) {
             orderItemList.add(item);
+            totalPrice += item.getTotalPrice();
         }
     }
 
-    public int getTotalPrice() {
-        int totalPrice = 0;
-        for (OrderItem item : orderItemList) {
-            totalPrice += item.getTotalPrice();
-        }
-        return totalPrice;
-    }
 }

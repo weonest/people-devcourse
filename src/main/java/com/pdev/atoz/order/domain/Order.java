@@ -10,20 +10,21 @@ public class Order {
 
     private final Email email;
     private final String address;
-    private final OrderStatus orderStatus;
+    private OrderStatus orderStatus;
     private final LocalDateTime createdAt;
-    private final OrderItems orderItems;
 
     @Builder
     private Order(Email email,
                  String address,
                  OrderStatus orderStatus,
-                 LocalDateTime createdAt,
-                 OrderItems orderItems) {
+                 LocalDateTime createdAt) {
         this.email = email;
         this.address = address;
-        this.orderItems = orderItems;
         this.orderStatus = orderStatus;
         this.createdAt = createdAt;
+    }
+
+    public void cancel() {
+        this.orderStatus = OrderStatus.CANCELLED;
     }
 }
