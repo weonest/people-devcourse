@@ -7,6 +7,6 @@ import java.util.List;
 public record OrderCreateDto (
         String email,
         String address,
-        List<OrderItem> orderItemList
+        List<OrderItem> items
 ){
 }

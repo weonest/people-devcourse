@@ -1,5 +1,6 @@
 package com.pdev.atoz.order.domain;
 
+import com.pdev.atoz.product.domain.Product;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 public class OrderItem {
 
-    private long productId;
+    private Product product;
 
     private Category category;
 
@@ -19,12 +20,12 @@ public class OrderItem {
     private LocalDateTime createdAt;
 
     @Builder
-    private OrderItem(long productId,
+    private OrderItem(Product product,
                       Category category,
                       int quantity,
                       int price,
                       LocalDateTime createdAt) {
-        this.productId = productId;
+        this.product = product;
         this.category = category;
         this.quantity = quantity;
         this.totalPrice = price * quantity;

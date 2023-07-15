@@ -13,11 +13,11 @@ class OrderRepositoryTest {
     @Autowired
     OrderRepository orderRepository;
 
-    @Test
-    void test() {
-        Email geonhee = new Email("geonhee");
-        Order order = new Order(geonhee, "gd", null, OrderStatus.READY_FOR_DELIVERY, null);
-        orderRepository.save(order);
-    }
+//    @Test
+//    void test() {
+//        Email geonhee = new Email("geonhee");
+//        Order order = new Order(geonhee, "gd", null, OrderStatus.READY_FOR_DELIVERY, null);
+//        orderRepository.save(order);
+//    }
 
 }

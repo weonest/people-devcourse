@@ -1,5 +1,6 @@
 package com.pdev.atoz.order.entity;
 
+import com.pdev.atoz.product.domain.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -17,17 +18,17 @@ public class OrderItemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
-    @Column(name = "order_id")
-    private long orderId;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private OrderEntity orderId;
+
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private Product productId;
 
     @NotNull
-    @Column(name = "product_id")
-    private long productId;
-
-    @NotNull
-    @Column(name = "category")
-    private String category;
+    @Column(name = "order_status")
+    private String orderStatus;
 
     @NotNull
     @Column(name = "quantity")
@@ -38,11 +39,10 @@ public class OrderItemEntity {
     private LocalDateTime createdAT;
 
     @Builder
-    private OrderItemEntity(long id, @NotNull long orderId, @NotNull long productId, @NotNull String category, @NotNull int quantity, @NotNull LocalDateTime createdAT) {
-        this.id = id;
+    private OrderItemEntity(@NotNull OrderEntity orderId, @NotNull Product productId, @NotNull String orderStatus, @NotNull int quantity, @NotNull LocalDateTime createdAT) {
         this.orderId = orderId;
         this.productId = productId;
-        this.category = category;
+        this.orderStatus = orderStatus;
         this.quantity = quantity;
         this.createdAT = createdAT;
     }
