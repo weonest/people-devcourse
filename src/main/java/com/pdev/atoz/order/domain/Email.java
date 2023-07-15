@@ -2,9 +2,9 @@ package com.pdev.atoz.order.domain;
 
 public class Email {
 
-    private String address;
+    private String mailAddress;
 
-    public Email(String address) {
-        this.address = address;
+    public Email(String mailAddress) {
+        this.mailAddress = mailAddress;
     }
 }
