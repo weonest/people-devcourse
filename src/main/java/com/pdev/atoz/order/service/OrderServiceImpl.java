@@ -1,15 +1,13 @@
 package com.pdev.atoz.order.service;
 
 import com.pdev.atoz.order.domain.*;
+import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.dto.OrderResponseDto;
 import com.pdev.atoz.order.entity.OrderEntity;
 import com.pdev.atoz.order.entity.OrderItemEntity;
 import com.pdev.atoz.order.repository.OrderItemRepository;
 import com.pdev.atoz.order.repository.OrderRepository;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -23,19 +21,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponseDto create(String mailAddress, String address, List<OrderItem> items) {
-        Email email = new Email(mailAddress);
-
-        OrderEntity orderEntity = OrderEntity.builder()
-                .email(email.getMailAddress())
-                .address(address)
-                .orderStatus(OrderStatus.READY_FOR_DELIVERY.toString())
-                .createdAt(LocalDateTime.now())
-                .build();
+    public OrderResponseDto create(OrderCreateDto createDto) {
+        Email email = new Email(createDto.email());
+        OrderEntity orderEntity = OrderMapper.convertCreateToEntity(createDto, email);
         orderRepository.save(orderEntity);
 
-        OrderItems orderItems = new OrderItems();
-        orderItems.addItem(items);
+        OrderItems orderItems = new OrderItems(){{addItem(createDto.items());}};
         orderItems.getOrderItemList().forEach(orderItem -> {
             OrderItemEntity orderItemEntity = OrderItemEntity.builder()
                     .orderId(orderEntity)
@@ -46,6 +37,6 @@ public class OrderServiceImpl implements OrderService {
                     .build();
             orderItemRepository.save(orderItemEntity);
         });
-        return null;
+        return OrderMapper.convertEntityToResponse(orderEntity);
     }
 }

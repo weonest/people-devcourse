@@ -52,9 +52,9 @@ class OrderServiceImplTest {
 
         List<OrderItem> items = new ArrayList<>(List.of(orderItem, orderItem2));
 
-        OrderCreateDto orderCreateDto = new OrderCreateDto("건희", "수원", items);
+        OrderCreateDto createDto = new OrderCreateDto("건희", "수원", items);
 
-        orderService.create(orderCreateDto.email(), orderCreateDto.address(), orderCreateDto.items());
+        orderService.create(createDto);
 
     }
 }

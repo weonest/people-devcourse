@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public record OrderResponseDto(
         long orderId,
-        String address,
         String email,
+        String address,
         String orderStatus,
         LocalDateTime createdAt
 ){
