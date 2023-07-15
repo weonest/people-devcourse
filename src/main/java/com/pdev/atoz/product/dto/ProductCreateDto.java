@@ -1,4 +1,4 @@
-package com.pdev.atoz.order.dto;
+package com.pdev.atoz.product.dto;
 
 import com.pdev.atoz.order.domain.Category;
 

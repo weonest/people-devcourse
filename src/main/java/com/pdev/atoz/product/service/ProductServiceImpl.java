@@ -1,8 +1,8 @@
-package com.pdev.atoz.order.service;
+package com.pdev.atoz.product.service;
 
-import com.pdev.atoz.order.domain.Product;
-import com.pdev.atoz.order.dto.ProductCreateDto;
-import com.pdev.atoz.order.repository.ProductRepository;
+import com.pdev.atoz.product.domain.Product;
+import com.pdev.atoz.product.dto.ProductCreateDto;
+import com.pdev.atoz.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

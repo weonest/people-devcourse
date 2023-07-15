@@ -1,5 +1,6 @@
-package com.pdev.atoz.order.domain;
+package com.pdev.atoz.product.domain;
 
+import com.pdev.atoz.order.domain.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
