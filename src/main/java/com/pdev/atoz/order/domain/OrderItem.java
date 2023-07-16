@@ -31,5 +31,4 @@ public class OrderItem {
         this.totalPrice = price * quantity;
         this.createdAt = createdAt;
     }
-
 }

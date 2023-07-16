@@ -1,6 +1,9 @@
 package com.pdev.atoz.order.service;
 
-import com.pdev.atoz.order.domain.*;
+import com.pdev.atoz.order.domain.Email;
+import com.pdev.atoz.order.domain.Order;
+import com.pdev.atoz.order.domain.OrderItems;
+import com.pdev.atoz.order.domain.OrderMapper;
 import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.dto.OrderResponseDto;
 import com.pdev.atoz.order.entity.OrderEntity;
@@ -8,6 +11,7 @@ import com.pdev.atoz.order.entity.OrderItemEntity;
 import com.pdev.atoz.order.repository.OrderItemRepository;
 import com.pdev.atoz.order.repository.OrderRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -31,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
             OrderItemEntity orderItemEntity = OrderItemEntity.builder()
                     .orderId(orderEntity)
                     .productId(orderItem.getProduct())
-                    .orderStatus(orderEntity.getOrderStatus())
+                    .category(orderItem.getCategory().toString())
                     .quantity(orderItem.getQuantity())
                     .createdAT(orderItem.getCreatedAt())
                     .build();
@@ -40,10 +44,27 @@ public class OrderServiceImpl implements OrderService {
         return OrderMapper.convertEntityToResponse(orderEntity);
     }
 
+    @Transactional
     public void cancelOrder(long orderId) {
         OrderEntity orderEntity = orderRepository.findById(orderId).get();
         Order order = OrderMapper.convertEntityToDomain(orderEntity);
         order.cancel();
         orderRepository.updateOrderStatus(order.getOrderStatus().toString(), orderEntity.getId());
+    }
+
+    @Transactional
+    public OrderResponseDto deliverOrder(long orderId) {
+        OrderEntity orderEntity = orderRepository.findById(orderId).get();
+        Order order = OrderMapper.convertEntityToDomain(orderEntity);
+        order.deliver();
+        orderRepository.updateOrderStatus(order.getOrderStatus().toString(), orderEntity.getId());
+        return OrderMapper.convertDomainToResponse(order);
+    }
+
+    @Transactional
+    public void deleteOrderById(long orderId) {
+        OrderEntity orderEntity = orderRepository.findById(orderId).get();
+        orderItemRepository.deleteByOrderId(orderEntity);
+        orderRepository.deleteById(orderId);
     }
 }

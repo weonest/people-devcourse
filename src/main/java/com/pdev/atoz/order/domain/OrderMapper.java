@@ -3,7 +3,6 @@ package com.pdev.atoz.order.domain;
 import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.dto.OrderResponseDto;
 import com.pdev.atoz.order.entity.OrderEntity;
-import com.pdev.atoz.order.entity.OrderItemEntity;
 
 import java.time.LocalDateTime;
 
@@ -21,15 +20,6 @@ public class OrderMapper {
                 .build();
     }
 
-    //    public static OrderItemEntity convertOrderItemToEntity(OrderItem orderItem) {
-//        return OrderItemEntity.builder()
-//                .orderId(orderEntity)
-//                .productId(orderItem.getProduct())
-//                .orderStatus(orderEntity.getOrderStatus())
-//                .quantity(orderItem.getQuantity())
-//                .createdAT(orderItem.getCreatedAt())
-//                .build();
-//    }
     public static OrderResponseDto convertEntityToResponse(OrderEntity orderEntity) {
         return new OrderResponseDto(orderEntity.getId(),
                 orderEntity.getEmail(),
@@ -42,6 +32,7 @@ public class OrderMapper {
         Email email = new Email(orderEntity.getEmail());
         OrderStatus orderStatus = OrderStatus.valueOf(orderEntity.getOrderStatus());
         return Order.builder()
+                .id(orderEntity.getId())
                 .email(email)
                 .address(orderEntity.getAddress())
                 .orderStatus(orderStatus)
@@ -56,5 +47,15 @@ public class OrderMapper {
                 .orderStatus(order.getOrderStatus().toString())
                 .createdAt(order.getCreatedAt())
                 .build();
+    }
+
+    public static OrderResponseDto convertDomainToResponse(Order order) {
+        return new OrderResponseDto(
+                order.getId(),
+                order.getEmail().getMailAddress(),
+                order.getAddress(),
+                order.getOrderStatus().toString(),
+                order.getCreatedAt()
+        );
     }
 }

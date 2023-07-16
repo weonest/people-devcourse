@@ -18,7 +18,7 @@ public class Product {
     private long id;
 
     @NotNull
-    @Column(name = "product_name")
+    @Column(name = "product_name", unique = true)
     private String productName;
 
     @NotNull

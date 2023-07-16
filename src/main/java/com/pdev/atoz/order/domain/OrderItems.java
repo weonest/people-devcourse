@@ -18,5 +18,4 @@ public class OrderItems {
             totalPrice += item.getTotalPrice();
         }
     }
-
 }

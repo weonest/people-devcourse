@@ -7,4 +7,8 @@ public interface OrderService {
     OrderResponseDto create(OrderCreateDto createDto);
 
     void cancelOrder(long orderId);
+
+    OrderResponseDto deliverOrder(long orderId);
+
+    void deleteOrderById(long id);
 }

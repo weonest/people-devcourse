@@ -3,8 +3,10 @@ package com.pdev.atoz.order.service;
 import com.pdev.atoz.order.domain.Category;
 import com.pdev.atoz.order.domain.OrderItem;
 import com.pdev.atoz.order.dto.OrderCreateDto;
+import com.pdev.atoz.order.repository.OrderItemRepository;
 import com.pdev.atoz.product.domain.Product;
 import com.pdev.atoz.product.repository.ProductRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,8 +15,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class OrderServiceImplTest {
 
@@ -22,15 +22,20 @@ class OrderServiceImplTest {
     private OrderService orderService;
 
     @Autowired
+    private OrderItemRepository orderItemRepository;
+    @Autowired
     private ProductRepository productRepository;
 
-    @Test
-    void createOrderTest() {
+    @BeforeEach
+    void setUp() {
         Product pr = new Product("밥", Category.FOOD, 100, "good", LocalDateTime.now());
         productRepository.save(pr);
         Product pr2 = new Product("죽", Category.FOOD, 100, "good", LocalDateTime.now());
         productRepository.save(pr2);
+    }
 
+    @Test
+    void createOrderTest() {
         Product product1 = productRepository.findById(1L).get();
         Product product2 = productRepository.findById(2L).get();
 
@@ -56,5 +61,7 @@ class OrderServiceImplTest {
 
         orderService.create(createDto);
 
+//        orderService.cancelOrder(1);
+        orderService.deliverOrder(1);
     }
 }

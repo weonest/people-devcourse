@@ -18,7 +18,7 @@ public class OrderItemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "order_id")
     private OrderEntity orderId;
 
@@ -27,8 +27,8 @@ public class OrderItemEntity {
     private Product productId;
 
     @NotNull
-    @Column(name = "order_status")
-    private String orderStatus;
+    @Column(name = "category")
+    private String category;
 
     @NotNull
     @Column(name = "quantity")
@@ -39,10 +39,10 @@ public class OrderItemEntity {
     private LocalDateTime createdAT;
 
     @Builder
-    private OrderItemEntity(@NotNull OrderEntity orderId, @NotNull Product productId, @NotNull String orderStatus, @NotNull int quantity, @NotNull LocalDateTime createdAT) {
+    private OrderItemEntity(@NotNull OrderEntity orderId, @NotNull Product productId, @NotNull String category, @NotNull int quantity, @NotNull LocalDateTime createdAT) {
         this.orderId = orderId;
         this.productId = productId;
-        this.orderStatus = orderStatus;
+        this.category = category;
         this.quantity = quantity;
         this.createdAT = createdAT;
     }
