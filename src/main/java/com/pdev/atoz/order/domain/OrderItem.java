@@ -1,5 +1,6 @@
 package com.pdev.atoz.order.domain;
 
+import com.pdev.atoz.product.domain.Category;
 import com.pdev.atoz.product.domain.Product;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,14 +22,12 @@ public class OrderItem {
 
     @Builder
     private OrderItem(Product product,
-                      Category category,
                       int quantity,
-                      int price,
                       LocalDateTime createdAt) {
         this.product = product;
-        this.category = category;
+        this.category = product.getCategory();
         this.quantity = quantity;
-        this.totalPrice = price * quantity;
+        this.totalPrice = product.getPrice() * quantity;
         this.createdAt = createdAt;
     }
 }

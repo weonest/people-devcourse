@@ -1,6 +1,6 @@
 package com.pdev.atoz.order.service;
 
-import com.pdev.atoz.order.domain.Category;
+import com.pdev.atoz.product.domain.Category;
 import com.pdev.atoz.order.domain.OrderItem;
 import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.repository.OrderItemRepository;
@@ -41,17 +41,13 @@ class OrderServiceImplTest {
 
         OrderItem orderItem = OrderItem.builder()
                 .product(product1)
-                .category(product1.getCategory())
                 .quantity(3)
-                .price(product1.getPrice())
                 .createdAt(LocalDateTime.now())
                 .build();
 
         OrderItem orderItem2 = OrderItem.builder()
                 .product(product2)
-                .category(product2.getCategory())
                 .quantity(5)
-                .price(product2.getPrice())
                 .createdAt(LocalDateTime.now())
                 .build();
 
