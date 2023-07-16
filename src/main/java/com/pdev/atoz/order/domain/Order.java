@@ -31,6 +31,10 @@ public class Order {
     }
 
     public void deliver() {
+        this.orderStatus = OrderStatus.DELIVERING;
+    }
+
+    public void complete() {
         this.orderStatus = OrderStatus.COMPLETED;
     }
 }

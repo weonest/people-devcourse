@@ -62,6 +62,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Transactional
+    public OrderResponseDto completeOrder(long orderId) {
+        OrderEntity orderEntity = orderRepository.findById(orderId).get();
+        Order order = OrderMapper.convertEntityToDomain(orderEntity);
+        order.complete();
+        orderRepository.updateOrderStatus(order.getOrderStatus().toString(), orderEntity.getId());
+        return OrderMapper.convertDomainToResponse(order);
+    }
+
+    @Transactional
     public void deleteOrderById(long orderId) {
         OrderEntity orderEntity = orderRepository.findById(orderId).get();
         orderItemRepository.deleteByOrderId(orderEntity);
