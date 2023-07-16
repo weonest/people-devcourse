@@ -27,6 +27,7 @@ public class OrderServiceImpl implements OrderService {
         this.orderItemRepository = orderItemRepository;
     }
 
+
     @Override
     public OrderResponseDto create(OrderCreateDto createDto) {
         Email email = new Email(createDto.email());
@@ -71,6 +72,11 @@ public class OrderServiceImpl implements OrderService {
         order.complete();
         orderRepository.updateOrderStatus(order.getOrderStatus().toString(), orderEntity.getId());
         return OrderMapper.convertDomainToResponse(order);
+    }
+
+    public OrderResponseDto findOrder(long id) {
+        OrderEntity orderEntity = orderRepository.findById(id).get();
+        return OrderMapper.convertEntityToResponse(orderEntity);
     }
 
     public List<OrderResponseDto> findOrders() {

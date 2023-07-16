@@ -16,6 +16,8 @@ public interface OrderService {
 
     List<OrderResponseDto> findOrders();
 
+    OrderResponseDto findOrder(long id);
+
     void deleteOrderById(long id);
 
 }
