@@ -1,6 +1,6 @@
 package com.pdev.atoz.product.dto;
 
-import com.pdev.atoz.order.domain.Category;
+import com.pdev.atoz.product.domain.Category;
 
 public record ProductCreateDto(
         String productName,

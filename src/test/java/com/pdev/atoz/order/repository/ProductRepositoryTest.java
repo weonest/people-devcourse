@@ -1,6 +1,6 @@
 package com.pdev.atoz.order.repository;
 
-import com.pdev.atoz.order.domain.Category;
+import com.pdev.atoz.product.domain.Category;
 import com.pdev.atoz.product.domain.Product;
 import com.pdev.atoz.product.repository.ProductRepository;
 import org.junit.jupiter.api.Test;

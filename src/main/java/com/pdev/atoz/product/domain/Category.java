@@ -1,4 +1,4 @@
-package com.pdev.atoz.order.domain;
+package com.pdev.atoz.product.domain;
 
 public enum Category {
     FOOD,

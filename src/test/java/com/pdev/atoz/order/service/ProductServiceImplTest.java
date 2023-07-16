@@ -1,6 +1,6 @@
 package com.pdev.atoz.order.service;
 
-import com.pdev.atoz.order.domain.Category;
+import com.pdev.atoz.product.domain.Category;
 import com.pdev.atoz.product.dto.ProductCreateDto;
 import com.pdev.atoz.product.service.ProductService;
 import org.junit.jupiter.api.Test;
