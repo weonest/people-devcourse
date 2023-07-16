@@ -13,6 +13,9 @@ import com.pdev.atoz.order.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+@Transactional(readOnly = true)
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -68,6 +71,13 @@ public class OrderServiceImpl implements OrderService {
         order.complete();
         orderRepository.updateOrderStatus(order.getOrderStatus().toString(), orderEntity.getId());
         return OrderMapper.convertDomainToResponse(order);
+    }
+
+    public List<OrderResponseDto> findOrders() {
+        List<OrderEntity> orders = orderRepository.findAll();
+        return orders.stream()
+                .map(OrderMapper::convertEntityToResponse)
+                .toList();
     }
 
     @Transactional

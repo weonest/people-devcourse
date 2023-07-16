@@ -3,6 +3,8 @@ package com.pdev.atoz.order.service;
 import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.dto.OrderResponseDto;
 
+import java.util.List;
+
 public interface OrderService {
     OrderResponseDto create(OrderCreateDto createDto);
 
@@ -10,5 +12,10 @@ public interface OrderService {
 
     OrderResponseDto deliverOrder(long orderId);
 
+    OrderResponseDto completeOrder(long orderId);
+
+    List<OrderResponseDto> findOrders();
+
     void deleteOrderById(long id);
+
 }
