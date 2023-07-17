@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/api/orders")
+@RestController()
+@RequestMapping("/api/orders")
 public class OrderApiController {
 
     private OrderService orderService;
@@ -19,7 +20,7 @@ public class OrderApiController {
         this.orderService = orderService;
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<OrderResponseDto>> orderList() {
         List<OrderResponseDto> response = orderService.findOrders();
         return ResponseEntity.ok(response);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Transactional(readOnly = true)
 @Service
@@ -38,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponseDto findProductBy(long id) {
+    public ProductResponseDto findProductById(long id) {
         Product product = productRepository.findById(id).get();
         return ProductMapper.convertEntityToResponse(product);
     }
@@ -47,6 +48,14 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponseDto findProductByProductName(String productName) {
         Product product = productRepository.findByProductName(productName).get();
         return ProductMapper.convertEntityToResponse(product);
+    }
+
+    @Override
+    public List<ProductResponseDto> findProducts() {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .map(ProductMapper::convertEntityToResponse)
+                .toList();
     }
 
     @Transactional
