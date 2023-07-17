@@ -27,6 +27,11 @@ public class ProductController {
         return "product-page";
     }
 
+    @GetMapping("/new")
+    public String newProductPage() {
+        return "product-new";
+    }
+
     @GetMapping("/{id}")
     public String productDetailPage(@PathVariable long id, Model model) {
         ProductResponseDto product = productService.findProductById(id);

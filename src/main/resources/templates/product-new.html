@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <title>Grids & Circles</title>
+</head>
+<body class="container-fluid">
+<h1>Grids & Circles</h1>
+<h2>Production Management</h2>
+<form th:action="@{/api/products}">
+  <div class="mb-3">
+    <label for="productName" class="form-label">상품명</label>
+    <input type="text" class="form-control" id="productName" name="productName">
+  </div>
+  <div class="mb-3">
+    <label for="category" class="form-label">카테고리</label>
+    <select id="category" name="category" class="form-select">
+      <option selected>카테고리를 골라주세요</option>
+      <option value="FOOD" >FOOD</option>
+      <option value="DRINK">DRINK</option>
+      <option value="DESSERT">DESSERT</option>
+      <option value="BONUS">BONUS</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="price" class="form-label">가격</label>
+    <input type="number" class="form-control" id="price" name="price">
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">설명</label>
+    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+  </div>
+  <button type="button" class="btn btn-primary" onclick="create()">제출</button>
+</form>
+
+<script>
+  function create() {
+    var data = {
+      "productName": $("#productName").val().trim(),
+      "category": $("#category").val().trim(),
+      "price": $("#price").val().trim(),
+      "description": $("#description").val().trim()
+    }
+    $.ajax({
+      url: '/products/new',
+      type: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+
+      success: function (result) {
+        console.log("result", result);
+        alert("상품 추가 완료");
+        window.location.href = '/products';
+      },
+    });
+  }
+</script>
+</body>
+</html>
