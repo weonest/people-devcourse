@@ -6,12 +6,10 @@ import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.dto.OrderResponseDto;
 import com.pdev.atoz.product.domain.Category;
 import com.pdev.atoz.product.domain.Product;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.pdev.atoz.product.repository.ProductRepository;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,35 +17,39 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DataJpaTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SpringBootTest
 class OrderServiceImplTest {
-
-    @TestConfiguration
-    @ComponentScan("com.pdev.atoz.order")
-    static class Config{
-    }
 
     @Autowired
     private OrderService orderService;
 
-    // 서비스 구현해서 연결하고 테스트 하자 
-    // 영속성 저장이 안되서 연관을 맺은 것도 저장이 안되는 중
-    Product pr = new Product("밥", Category.FOOD, 100, "good", LocalDateTime.now());
-    Product pr2 = new Product("죽", Category.FOOD, 100, "good", LocalDateTime.now());
+    @Autowired
+    private ProductRepository productRepository;
 
-    OrderItem orderItem = OrderItem.builder()
-            .product(pr)
-            .quantity(3)
-            .createdAt(LocalDateTime.now())
-            .build();
+    private List<OrderItem> items;
 
-    OrderItem orderItem2 = OrderItem.builder()
-            .product(pr2)
-            .quantity(5)
-            .createdAt(LocalDateTime.now())
-            .build();
+    @BeforeAll
+    void setUp() {
+        Product pr = new Product("밥", Category.FOOD, 100, "good", LocalDateTime.now());
+        productRepository.save(pr);
+        Product pr2 = new Product("죽", Category.FOOD, 100, "good", LocalDateTime.now());
+        productRepository.save(pr2);
 
-    List<OrderItem> items = new ArrayList<>(List.of(orderItem, orderItem2));
+        OrderItem orderItem = OrderItem.builder()
+                .product(pr)
+                .quantity(3)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        OrderItem orderItem2 = OrderItem.builder()
+                .product(pr2)
+                .quantity(5)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        items = new ArrayList<>(List.of(orderItem, orderItem2));
+    }
 
     @DisplayName("사용자 요청 정보를 통해 주문을 생성할 수 있다.")
     @Test
@@ -59,16 +61,42 @@ class OrderServiceImplTest {
         assertThat(createdOrder).isNotNull();
     }
 
-    @DisplayName("주문 id를 통해 주문 상태를 취소로 변경할 수 있다.")
+    @DisplayName("주문 Id를 통해 주문을 취소할 수 있다.")
     @Test
     void cancelOrderTest() {
         OrderCreateDto createDto = new OrderCreateDto("건희", "수원", items);
         OrderResponseDto createdOrder = orderService.create(createDto);
-        long orderId = createdOrder.orderId();
+        long id = createdOrder.orderId();
 
-        orderService.cancelOrder(orderId);
-        OrderResponseDto storedOrder = orderService.findOrder(orderId);
+        orderService.cancelOrder(id);
+        OrderResponseDto canceledOrder = orderService.findOrder(id);
 
-        assertThat(storedOrder.orderStatus()).isEqualTo(OrderStatus.CANCELLED.toString());
+        assertThat(canceledOrder.orderStatus()).isEqualTo(OrderStatus.CANCELLED.toString());
+    }
+
+    @DisplayName("주문 Id를 통해 주문을 배달할 수 있다.")
+    @Test
+    void deliverOrderTest() {
+        OrderCreateDto createDto = new OrderCreateDto("건희", "수원", items);
+        OrderResponseDto createdOrder = orderService.create(createDto);
+        long id = createdOrder.orderId();
+
+        orderService.deliverOrder(id);
+        OrderResponseDto canceledOrder = orderService.findOrder(id);
+
+        assertThat(canceledOrder.orderStatus()).isEqualTo(OrderStatus.DELIVERING.toString());
+    }
+
+    @DisplayName("주문 Id를 통해 주문을 배달을 완료할 수 있다.")
+    @Test
+    void completeOrderTest() {
+        OrderCreateDto createDto = new OrderCreateDto("건희", "수원", items);
+        OrderResponseDto createdOrder = orderService.create(createDto);
+        long id = createdOrder.orderId();
+
+        orderService.completeOrder(id);
+        OrderResponseDto canceledOrder = orderService.findOrder(id);
+
+        assertThat(canceledOrder.orderStatus()).isEqualTo(OrderStatus.COMPLETED.toString());
     }
 }

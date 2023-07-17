@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
         this.orderItemRepository = orderItemRepository;
     }
 
-
+    @Transactional
     @Override
     public OrderResponseDto create(OrderCreateDto createDto) {
         Email email = new Email(createDto.email());
