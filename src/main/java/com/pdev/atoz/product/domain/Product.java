@@ -1,5 +1,6 @@
 package com.pdev.atoz.product.domain;
 
+import com.pdev.atoz.product.dto.ProductUpdateDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -52,7 +53,17 @@ public class Product {
         this.createdAt = createdAt;
     }
 
-    public void updateModifiedAt(LocalDateTime modifiedAt) {
+    private void updateModifiedAt(LocalDateTime modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
+
+    public void changeProduct(ProductUpdateDto updateDto) {
+        this.productName = updateDto.productName();
+        this.category = updateDto.category();
+        this.price = updateDto.price();
+        this.description = updateDto.description();
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+
 }

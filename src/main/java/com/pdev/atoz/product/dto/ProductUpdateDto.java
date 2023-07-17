@@ -3,7 +3,9 @@ package com.pdev.atoz.product.dto;
 import com.pdev.atoz.product.domain.Category;
 import jakarta.validation.constraints.NotNull;
 
-public record ProductCreateDto(
+public record ProductUpdateDto (
+        @NotNull
+        long productId,
         @NotNull
         String productName,
         @NotNull
@@ -12,5 +14,5 @@ public record ProductCreateDto(
         int price,
         @NotNull
         String description
-) {
+){
 }

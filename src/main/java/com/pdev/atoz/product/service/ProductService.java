@@ -1,9 +1,18 @@
 package com.pdev.atoz.product.service;
 
-import com.pdev.atoz.product.domain.Product;
 import com.pdev.atoz.product.dto.ProductCreateDto;
+import com.pdev.atoz.product.dto.ProductResponseDto;
+import com.pdev.atoz.product.dto.ProductUpdateDto;
 
 public interface ProductService {
 
-    Product create(ProductCreateDto createDto);
+    ProductResponseDto create(ProductCreateDto createDto);
+
+    ProductResponseDto update(ProductUpdateDto updateDto);
+
+    ProductResponseDto findProductBy(long id);
+
+    ProductResponseDto findProductByProductName(String productName);
+
+    void deleteProductById(long id);
 }
