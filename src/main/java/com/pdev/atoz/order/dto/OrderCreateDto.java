@@ -1,16 +1,16 @@
 package com.pdev.atoz.order.dto;
 
 import com.pdev.atoz.order.domain.OrderItem;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
 public record OrderCreateDto (
-        @NotNull
+        @NotEmpty
         String email,
-        @NotNull
+        @NotEmpty
         String address,
-        @NotNull
+        @NotEmpty
         List<OrderItem> items
 ){
 }

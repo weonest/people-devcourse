@@ -1,16 +1,16 @@
 package com.pdev.atoz.product.dto;
 
 import com.pdev.atoz.product.domain.Category;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 
 public record ProductCreateDto(
-        @NotNull
+        @NotEmpty
         String productName,
-        @NotNull
+        @NotEmpty
         Category category,
-        @NotNull
+        @NotEmpty
         int price,
-        @NotNull
+        @NotEmpty
         String description
 ) {
 }

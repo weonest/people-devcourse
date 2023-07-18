@@ -2,7 +2,7 @@ package com.pdev.atoz.order.entity;
 
 import com.pdev.atoz.product.domain.Product;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,24 +26,24 @@ public class OrderItemEntity {
     @JoinColumn(name = "product_id")
     private Product productId;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "category")
     private String category;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "quantity")
     private int quantity;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "total_price")
     private int totalPrice;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "created_at")
     private LocalDateTime createdAT;
 
     @Builder
-    private OrderItemEntity(@NotNull OrderEntity orderId, @NotNull Product productId, @NotNull String category, @NotNull int quantity, @NotNull int totalPrice, @NotNull LocalDateTime createdAT) {
+    private OrderItemEntity(@NotEmpty OrderEntity orderId, @NotEmpty Product productId, @NotEmpty String category, @NotEmpty int quantity, @NotEmpty int totalPrice, @NotEmpty LocalDateTime createdAT) {
         this.orderId = orderId;
         this.productId = productId;
         this.category = category;

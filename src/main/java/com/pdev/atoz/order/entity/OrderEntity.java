@@ -1,7 +1,7 @@
 package com.pdev.atoz.order.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,24 +17,24 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "email", unique = true)
     private String email;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "address")
     private String address;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "order_status")
     private String orderStatus;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Builder
-    private OrderEntity(@NotNull String email, @NotNull String address, @NotNull String orderStatus, @NotNull LocalDateTime createdAt) {
+    private OrderEntity(@NotEmpty String email, @NotEmpty String address, @NotEmpty String orderStatus, @NotEmpty LocalDateTime createdAt) {
         this.email = email;
         this.address = address;
         this.orderStatus = orderStatus;

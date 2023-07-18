@@ -6,6 +6,7 @@ import com.pdev.atoz.product.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +41,13 @@ public class ProductController {
     }
 
     @PostMapping("/new")
-    public String productsPage(@Valid @RequestBody ProductCreateDto createDto) {
+    public String productsPage(@RequestBody @Valid ProductCreateDto createDto, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult.getFieldError());
+            return "product-new";
+        }
+
         productService.create(createDto);
         return "redirect:/products";
     }
