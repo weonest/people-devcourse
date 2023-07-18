@@ -27,13 +27,12 @@ function App() {
 
   const handleOrderSubmit = (order) => {
     if (items.length === 0) {
-      alert("아이템을 추가해 주세요!");
+      alert("상품을 추가해 주세요!");
     } else {
       axios.post('http://localhost:8080/api/orders', {
         email: order.email,
         address: order.address,
-        postcode: order.postcode,
-        orderItems: items.map(v => ({
+        items: items.map(v => ({
           productId: v.productId,
           category: v.category,
           price: v.price,
@@ -42,7 +41,7 @@ function App() {
       }).then(
           v => alert("주문이 정상적으로 접수되었습니다."),
           e => {
-            alert("서버 장애");
+            alert("주문 요청에 에러가 발생하였습니다. 관리자에게 문의해 주세요.");
             console.error(e);
           })
     }

@@ -8,9 +8,8 @@ export function Summary({items = [], onOrderSubmit}) {
   });
   const handleEmailInputChanged = (e) => setOrder({...order, email: e.target.value})
   const handleAddressInputChanged = (e) => setOrder({...order, address: e.target.value})
-  const handlePostcodeInputChanged = (e) => setOrder({...order, postcode: e.target.value})
   const handleSubmit = (e) => {
-    if (order.address === "" || order.email === "" || order.postcode === "") {
+    if (order.address === "" || order.email === "") {
       alert("입력값을 확인해주세요!")
     } else {
       onOrderSubmit(order);

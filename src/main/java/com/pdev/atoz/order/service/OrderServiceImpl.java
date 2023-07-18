@@ -10,9 +10,12 @@ import com.pdev.atoz.order.entity.OrderEntity;
 import com.pdev.atoz.order.entity.OrderItemEntity;
 import com.pdev.atoz.order.repository.OrderItemRepository;
 import com.pdev.atoz.order.repository.OrderRepository;
+import com.pdev.atoz.product.domain.Product;
+import com.pdev.atoz.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -21,10 +24,12 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderRepository orderRepository;
     private OrderItemRepository orderItemRepository;
+    private ProductRepository productRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, OrderItemRepository orderItemRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderItemRepository orderItemRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
+        this.productRepository = productRepository;
     }
 
     @Transactional
@@ -35,14 +40,15 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(orderEntity);
 
         OrderItems orderItems = new OrderItems(){{addItem(createDto.items());}};
-        orderItems.getOrderItemList().forEach(orderItem -> {
+        orderItems.getOrderItemCreateDtoList().forEach(orderItem -> {
+            Product product = productRepository.findById(orderItem.getProductId()).get();
             OrderItemEntity orderItemEntity = OrderItemEntity.builder()
                     .orderId(orderEntity)
-                    .productId(orderItem.getProduct())
-                    .category(orderItem.getCategory().toString())
+                    .productId(product)
+                    .category(orderItem.getCategory())
                     .quantity(orderItem.getQuantity())
                     .totalPrice(orderItem.getTotalPrice())
-                    .createdAT(orderItem.getCreatedAt())
+                    .createdAt(LocalDateTime.now())
                     .build();
 
             orderItemRepository.save(orderItemEntity);

@@ -41,15 +41,15 @@ public class OrderItemEntity {
 
     @NotNull
     @Column(name = "created_at")
-    private LocalDateTime createdAT;
+    private LocalDateTime createdAt;
 
     @Builder
-    private OrderItemEntity(OrderEntity orderId, Product productId, String category, int quantity, int totalPrice, LocalDateTime createdAT) {
+    private OrderItemEntity(OrderEntity orderId, Product productId, String category, int quantity, int totalPrice, LocalDateTime createdAt) {
         this.orderId = orderId;
         this.productId = productId;
         this.category = category;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
-        this.createdAT = createdAT;
+        this.createdAt = createdAt;
     }
 }
