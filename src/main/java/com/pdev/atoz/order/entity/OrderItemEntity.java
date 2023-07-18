@@ -3,6 +3,7 @@ package com.pdev.atoz.order.entity;
 import com.pdev.atoz.product.domain.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,20 +31,20 @@ public class OrderItemEntity {
     @Column(name = "category")
     private String category;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "quantity")
     private int quantity;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "total_price")
     private int totalPrice;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "created_at")
     private LocalDateTime createdAT;
 
     @Builder
-    private OrderItemEntity(@NotEmpty OrderEntity orderId, @NotEmpty Product productId, @NotEmpty String category, @NotEmpty int quantity, @NotEmpty int totalPrice, @NotEmpty LocalDateTime createdAT) {
+    private OrderItemEntity(OrderEntity orderId, Product productId, String category, int quantity, int totalPrice, LocalDateTime createdAT) {
         this.orderId = orderId;
         this.productId = productId;
         this.category = category;

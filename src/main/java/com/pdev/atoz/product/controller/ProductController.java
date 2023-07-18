@@ -44,7 +44,6 @@ public class ProductController {
     public String productsPage(@RequestBody @Valid ProductCreateDto createDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getFieldError());
             return "product-new";
         }
 

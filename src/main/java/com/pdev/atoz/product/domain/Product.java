@@ -3,6 +3,7 @@ package com.pdev.atoz.product.domain;
 import com.pdev.atoz.product.dto.ProductUpdateDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,19 +22,19 @@ public class Product {
     @Column(name = "product_name", unique = true)
     private String productName;
 
-    @NotEmpty
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "Category")
     private Category category;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "price")
     private int price;
 
     @Column(name = "description")
     private String description;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

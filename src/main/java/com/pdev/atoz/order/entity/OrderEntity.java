@@ -2,6 +2,7 @@ package com.pdev.atoz.order.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,12 +30,12 @@ public class OrderEntity {
     @Column(name = "order_status")
     private String orderStatus;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Builder
-    private OrderEntity(@NotEmpty String email, @NotEmpty String address, @NotEmpty String orderStatus, @NotEmpty LocalDateTime createdAt) {
+    private OrderEntity(String email, String address, String orderStatus, LocalDateTime createdAt) {
         this.email = email;
         this.address = address;
         this.orderStatus = orderStatus;
