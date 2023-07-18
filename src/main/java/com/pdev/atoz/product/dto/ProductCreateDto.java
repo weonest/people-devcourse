@@ -1,6 +1,7 @@
 package com.pdev.atoz.product.dto;
 
 import com.pdev.atoz.product.domain.Category;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -9,9 +10,8 @@ public record ProductCreateDto(
         String productName,
         @NotNull
         Category category,
-        @NotNull
+        @Min(1)
         int price,
-        @NotEmpty
         String description
 ) {
 }

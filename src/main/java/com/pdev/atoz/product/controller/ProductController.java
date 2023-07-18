@@ -4,6 +4,8 @@ import com.pdev.atoz.product.dto.ProductCreateDto;
 import com.pdev.atoz.product.dto.ProductResponseDto;
 import com.pdev.atoz.product.service.ProductService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,8 @@ import java.util.List;
 @Controller()
 @RequestMapping("/products")
 public class ProductController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     private ProductService productService;
 
@@ -44,6 +48,7 @@ public class ProductController {
     public String productsPage(@RequestBody @Valid ProductCreateDto createDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
+            logger.warn("에러 사항 -> {}", bindingResult.getFieldErrors());
             return "product-new";
         }
 
