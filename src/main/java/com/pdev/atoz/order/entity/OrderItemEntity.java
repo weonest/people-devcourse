@@ -35,15 +35,20 @@ public class OrderItemEntity {
     private int quantity;
 
     @NotNull
+    @Column(name = "total_price")
+    private int totalPrice;
+
+    @NotNull
     @Column(name = "created_at")
     private LocalDateTime createdAT;
 
     @Builder
-    private OrderItemEntity(@NotNull OrderEntity orderId, @NotNull Product productId, @NotNull String category, @NotNull int quantity, @NotNull LocalDateTime createdAT) {
+    private OrderItemEntity(@NotNull OrderEntity orderId, @NotNull Product productId, @NotNull String category, @NotNull int quantity, @NotNull int totalPrice, @NotNull LocalDateTime createdAT) {
         this.orderId = orderId;
         this.productId = productId;
         this.category = category;
         this.quantity = quantity;
+        this.totalPrice = totalPrice;
         this.createdAT = createdAT;
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -54,7 +55,7 @@ class OrderServiceImplTest {
     @DisplayName("사용자 요청 정보를 통해 주문을 생성할 수 있다.")
     @Test
     void createOrderTest() {
-        OrderCreateDto createDto = new OrderCreateDto("건희", "수원", items);
+        OrderCreateDto createDto = new OrderCreateDto("gh33@naver.com", "수원", items);
 
         OrderResponseDto createdOrder = orderService.create(createDto);
 
@@ -64,7 +65,7 @@ class OrderServiceImplTest {
     @DisplayName("주문 Id를 통해 주문을 취소할 수 있다.")
     @Test
     void cancelOrderTest() {
-        OrderCreateDto createDto = new OrderCreateDto("건희", "수원", items);
+        OrderCreateDto createDto = new OrderCreateDto("gh33@naver.com", "수원", items);
         OrderResponseDto createdOrder = orderService.create(createDto);
         long id = createdOrder.orderId();
 
@@ -77,7 +78,7 @@ class OrderServiceImplTest {
     @DisplayName("주문 Id를 통해 주문을 배달할 수 있다.")
     @Test
     void deliverOrderTest() {
-        OrderCreateDto createDto = new OrderCreateDto("건희", "수원", items);
+        OrderCreateDto createDto = new OrderCreateDto("gh33@naver.com", "수원", items);
         OrderResponseDto createdOrder = orderService.create(createDto);
         long id = createdOrder.orderId();
 
@@ -90,7 +91,7 @@ class OrderServiceImplTest {
     @DisplayName("주문 Id를 통해 주문을 배달을 완료할 수 있다.")
     @Test
     void completeOrderTest() {
-        OrderCreateDto createDto = new OrderCreateDto("건희", "수원", items);
+        OrderCreateDto createDto = new OrderCreateDto("gh33@naver.com", "수원", items);
         OrderResponseDto createdOrder = orderService.create(createDto);
         long id = createdOrder.orderId();
 
@@ -98,5 +99,19 @@ class OrderServiceImplTest {
         OrderResponseDto canceledOrder = orderService.findOrder(id);
 
         assertThat(canceledOrder.orderStatus()).isEqualTo(OrderStatus.COMPLETED.toString());
+    }
+
+    @DisplayName("주문 Id를 통해 주문을 삭제할 수 있다.")
+    @Test
+    void deleteOrderTest() {
+        OrderCreateDto createDto = new OrderCreateDto("gh33@naver.com", "수원", items);
+        OrderResponseDto createdOrder = orderService.create(createDto);
+        long id = createdOrder.orderId();
+
+        orderService.deleteOrderById(id);
+
+        assertThatThrownBy(() -> orderService.findOrder(id))
+                .isInstanceOf(NoSuchElementException.class);
+
     }
 }

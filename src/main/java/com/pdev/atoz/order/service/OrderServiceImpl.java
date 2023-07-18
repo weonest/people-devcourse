@@ -41,8 +41,10 @@ public class OrderServiceImpl implements OrderService {
                     .productId(orderItem.getProduct())
                     .category(orderItem.getCategory().toString())
                     .quantity(orderItem.getQuantity())
+                    .totalPrice(orderItem.getTotalPrice())
                     .createdAT(orderItem.getCreatedAt())
                     .build();
+
             orderItemRepository.save(orderItemEntity);
         });
         return OrderMapper.convertEntityToResponse(orderEntity);
