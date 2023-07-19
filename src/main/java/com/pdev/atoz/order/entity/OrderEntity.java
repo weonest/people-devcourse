@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotEmpty
     @Column(name = "email", unique = true)

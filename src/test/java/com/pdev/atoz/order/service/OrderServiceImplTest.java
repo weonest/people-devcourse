@@ -39,11 +39,13 @@ class OrderServiceImplTest {
 
         OrderItemCreateDto orderItemCreateDto = OrderItemCreateDto.builder()
                 .productId(pr.getId())
+                .category(pr.getCategory().toString())
                 .quantity(3)
                 .build();
 
         OrderItemCreateDto orderItemCreateDto2 = OrderItemCreateDto.builder()
                 .productId(pr2.getId())
+                .category(pr2.getCategory().toString())
                 .quantity(5)
                 .build();
 

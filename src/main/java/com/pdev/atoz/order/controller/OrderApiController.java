@@ -33,13 +33,13 @@ public class OrderApiController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> orderDelete(@PathVariable long id) {
+    public ResponseEntity<Void> orderDelete(@PathVariable Long id) {
         orderService.deleteOrderById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Void> orderCancel(@PathVariable long id) {
+    public ResponseEntity<Void> orderCancel(@PathVariable Long id) {
         orderService.cancelOrder(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

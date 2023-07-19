@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class OrderItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "order_id")

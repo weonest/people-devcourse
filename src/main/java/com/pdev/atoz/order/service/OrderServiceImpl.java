@@ -96,8 +96,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     public void deleteOrderById(long orderId) {
-        OrderEntity orderEntity = orderRepository.findById(orderId).get();
-        orderItemRepository.deleteByOrderId(orderEntity);
+        orderItemRepository.deleteByOrderIdId(orderId);
         orderRepository.deleteById(orderId);
     }
 }
