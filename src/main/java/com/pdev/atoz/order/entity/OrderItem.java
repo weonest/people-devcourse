@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-public class OrderItemEntity {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,7 +44,7 @@ public class OrderItemEntity {
     private LocalDateTime createdAt;
 
     @Builder
-    private OrderItemEntity(Order orderId, Product productId, String category, int quantity, int totalPrice, LocalDateTime createdAt) {
+    private OrderItem(Order orderId, Product productId, String category, int quantity, int totalPrice, LocalDateTime createdAt) {
         this.orderId = orderId;
         this.productId = productId;
         this.category = category;

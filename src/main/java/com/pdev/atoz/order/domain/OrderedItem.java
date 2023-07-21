@@ -1,11 +1,11 @@
-package com.pdev.atoz.order.dto;
+package com.pdev.atoz.order.domain;
 
 import lombok.Builder;
 import lombok.Getter;
 
 
 @Getter
-public class OrderItemCreateDto {
+public class OrderedItem {
 
     private final long productId;
 
@@ -16,10 +16,10 @@ public class OrderItemCreateDto {
     private final int totalPrice;
 
     @Builder
-    private OrderItemCreateDto(long productId,
-                               String category,
-                               int price,
-                               int quantity) {
+    private OrderedItem(long productId,
+                        String category,
+                        int price,
+                        int quantity) {
         this.productId = productId;
         this.category = category;
         this.quantity = quantity;

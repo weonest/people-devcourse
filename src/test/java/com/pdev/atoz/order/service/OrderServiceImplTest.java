@@ -1,6 +1,6 @@
 package com.pdev.atoz.order.service;
 
-import com.pdev.atoz.order.dto.OrderItemCreateDto;
+import com.pdev.atoz.order.domain.OrderedItem;
 import com.pdev.atoz.order.domain.OrderStatus;
 import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.dto.OrderResponseDto;
@@ -30,7 +30,7 @@ class OrderServiceImplTest {
     @Autowired
     private ProductRepository productRepository;
 
-    private List<OrderItemCreateDto> items;
+    private List<OrderedItem> items;
 
     @BeforeAll
     void setUp() {
@@ -39,19 +39,19 @@ class OrderServiceImplTest {
         Product pr2 = new Product("죽", Category.FOOD, 100, "good", LocalDateTime.now());
         productRepository.save(pr2);
 
-        OrderItemCreateDto orderItemCreateDto = OrderItemCreateDto.builder()
+        OrderedItem orderedItem = OrderedItem.builder()
                 .productId(pr.getId())
                 .category(pr.getCategory().toString())
                 .quantity(3)
                 .build();
 
-        OrderItemCreateDto orderItemCreateDto2 = OrderItemCreateDto.builder()
+        OrderedItem orderedItem2 = OrderedItem.builder()
                 .productId(pr2.getId())
                 .category(pr2.getCategory().toString())
                 .quantity(5)
                 .build();
 
-        items = new ArrayList<>(List.of(orderItemCreateDto, orderItemCreateDto2));
+        items = new ArrayList<>(List.of(orderedItem, orderedItem2));
     }
 
     @DisplayName("사용자 요청 정보를 통해 주문을 생성할 수 있다.")

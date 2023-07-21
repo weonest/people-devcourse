@@ -1,12 +1,11 @@
 package com.pdev.atoz.order.service;
 
-import com.pdev.atoz.order.domain.Email;
 import com.pdev.atoz.order.domain.OrderItems;
 import com.pdev.atoz.order.domain.OrderMapper;
 import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.dto.OrderResponseDto;
 import com.pdev.atoz.order.entity.Order;
-import com.pdev.atoz.order.entity.OrderItemEntity;
+import com.pdev.atoz.order.entity.OrderItem;
 import com.pdev.atoz.order.repository.OrderItemRepository;
 import com.pdev.atoz.order.repository.OrderRepository;
 import com.pdev.atoz.product.domain.Product;
@@ -38,18 +37,18 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
 
         OrderItems orderItems = new OrderItems(){{addItem(createDto.items());}};
-        orderItems.getOrderItemCreateDtoList().forEach(orderItem -> {
-            Product product = productRepository.findById(orderItem.getProductId()).get();
-            OrderItemEntity orderItemEntity = OrderItemEntity.builder()
+        orderItems.getItemList().forEach(item -> {
+            Product product = productRepository.findById(item.getProductId()).orElseThrow();
+            OrderItem orderItem = OrderItem.builder()
                     .orderId(order)
                     .productId(product)
-                    .category(orderItem.getCategory())
-                    .quantity(orderItem.getQuantity())
-                    .totalPrice(orderItem.getTotalPrice())
+                    .category(item.getCategory())
+                    .quantity(item.getQuantity())
+                    .totalPrice(item.getTotalPrice())
                     .createdAt(LocalDateTime.now())
                     .build();
 
-            orderItemRepository.save(orderItemEntity);
+            orderItemRepository.save(orderItem);
         });
         return OrderMapper.convertEntityToResponse(order);
     }
