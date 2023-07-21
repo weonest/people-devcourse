@@ -21,9 +21,9 @@ public class OrderItemEntity {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "order_id")
-    private OrderEntity orderId;
+    private Order orderId;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "product_id")
     private Product productId;
 
@@ -44,7 +44,7 @@ public class OrderItemEntity {
     private LocalDateTime createdAt;
 
     @Builder
-    private OrderItemEntity(OrderEntity orderId, Product productId, String category, int quantity, int totalPrice, LocalDateTime createdAt) {
+    private OrderItemEntity(Order orderId, Product productId, String category, int quantity, int totalPrice, LocalDateTime createdAt) {
         this.orderId = orderId;
         this.productId = productId;
         this.category = category;

@@ -1,12 +1,11 @@
 package com.pdev.atoz.order.service;
 
 import com.pdev.atoz.order.domain.Email;
-import com.pdev.atoz.order.domain.Order;
 import com.pdev.atoz.order.domain.OrderItems;
 import com.pdev.atoz.order.domain.OrderMapper;
 import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.dto.OrderResponseDto;
-import com.pdev.atoz.order.entity.OrderEntity;
+import com.pdev.atoz.order.entity.Order;
 import com.pdev.atoz.order.entity.OrderItemEntity;
 import com.pdev.atoz.order.repository.OrderItemRepository;
 import com.pdev.atoz.order.repository.OrderRepository;
@@ -35,15 +34,14 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public OrderResponseDto create(OrderCreateDto createDto) {
-        Email email = new Email(createDto.email());
-        OrderEntity orderEntity = OrderMapper.convertCreateToEntity(createDto, email);
-        orderRepository.save(orderEntity);
+        Order order = OrderMapper.convertCreateToEntity(createDto);
+        orderRepository.save(order);
 
         OrderItems orderItems = new OrderItems(){{addItem(createDto.items());}};
         orderItems.getOrderItemCreateDtoList().forEach(orderItem -> {
             Product product = productRepository.findById(orderItem.getProductId()).get();
             OrderItemEntity orderItemEntity = OrderItemEntity.builder()
-                    .orderId(orderEntity)
+                    .orderId(order)
                     .productId(product)
                     .category(orderItem.getCategory())
                     .quantity(orderItem.getQuantity())
@@ -53,42 +51,36 @@ public class OrderServiceImpl implements OrderService {
 
             orderItemRepository.save(orderItemEntity);
         });
-        return OrderMapper.convertEntityToResponse(orderEntity);
+        return OrderMapper.convertEntityToResponse(order);
     }
 
     @Transactional
     public void cancelOrder(long orderId) {
-        OrderEntity orderEntity = orderRepository.findById(orderId).get();
-        Order order = OrderMapper.convertEntityToDomain(orderEntity);
+        Order order = orderRepository.findById(orderId).orElseThrow();
         order.cancel();
-        orderRepository.updateOrderStatus(order.getOrderStatus().toString(), orderEntity.getId());
     }
 
     @Transactional
     public OrderResponseDto deliverOrder(long orderId) {
-        OrderEntity orderEntity = orderRepository.findById(orderId).get();
-        Order order = OrderMapper.convertEntityToDomain(orderEntity);
+        Order order = orderRepository.findById(orderId).orElseThrow();
         order.deliver();
-        orderRepository.updateOrderStatus(order.getOrderStatus().toString(), orderEntity.getId());
-        return OrderMapper.convertDomainToResponse(order);
+        return OrderMapper.convertEntityToResponse(order);
     }
 
     @Transactional
     public OrderResponseDto completeOrder(long orderId) {
-        OrderEntity orderEntity = orderRepository.findById(orderId).get();
-        Order order = OrderMapper.convertEntityToDomain(orderEntity);
+        Order order = orderRepository.findById(orderId).orElseThrow();
         order.complete();
-        orderRepository.updateOrderStatus(order.getOrderStatus().toString(), orderEntity.getId());
-        return OrderMapper.convertDomainToResponse(order);
+        return OrderMapper.convertEntityToResponse(order);
     }
 
     public OrderResponseDto findOrder(long id) {
-        OrderEntity orderEntity = orderRepository.findById(id).get();
-        return OrderMapper.convertEntityToResponse(orderEntity);
+        Order order = orderRepository.findById(id).orElseThrow();
+        return OrderMapper.convertEntityToResponse(order);
     }
 
     public List<OrderResponseDto> findOrders() {
-        List<OrderEntity> orders = orderRepository.findAll();
+        List<Order> orders = orderRepository.findAll();
         return orders.stream()
                 .map(OrderMapper::convertEntityToResponse)
                 .toList();
