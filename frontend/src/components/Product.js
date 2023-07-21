@@ -12,7 +12,7 @@ export function Product(props) {
 
   return <>
     <div className="col-2">
-      <img className="img-fluid" src="https://i.imgur.com/HKOFQYa.jpeg" alt=""/>
+      <img className="img-fluid" src="https://cdn-icons-png.flaticon.com/128/4080/4080032.png" alt=""/>
     </div>
     <div className="col">
       <div className="row text-muted">{category}</div>

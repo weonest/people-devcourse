@@ -11,7 +11,7 @@ public record ProductUpdateDto (
         long productId,
         @NotBlank
         String productName,
-        @NotBlank
+        @NotNull
         Category category,
         @Min(1)
         int price,

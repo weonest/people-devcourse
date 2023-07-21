@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link th:href="@{/css/signin.css}" href="/css/signin.css" rel="stylesheet">
+
+  <meta charset="UTF-8">
+  <title th:text="|${pageName}|"></title>
+</head>
+<body class="text-center">
+
+<div class="form-signin w-100 m-auto">
+  <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
+  <h2>회원 가입</h2>
+  <form th:method="post" th:action="|@{/session/join (loginType=${loginType})}|" th:object="${userJoinRequest}">
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="loginId" th:field="*{loginId}">
+      <label for="loginId">아이디 </label>
+      <div class="error-class" th:errors="*{loginId}"></div>
+    </div>
+
+    <br/>
+
+    <div class="form-floating">
+      <input type="password" class="form-control" id="password" th:field="*{password}">
+      <label for="password">비밀번호 </label>
+      <div class="error-class" th:errors="*{password}"></div>
+    </div>
+
+    <br/>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="passwordCheck" th:field="*{passwordCheck}">
+      <label for="passwordCheck">비밀번호 확인 </label>
+      <div class="error-class" th:errors="*{passwordCheck}"></div>
+    </div>
+    <br/>
+    <div class="form-floating">
+      <input type="text" class="form-control" id="nickname" th:field="*{nickname}">
+      <label for="nickname">닉네임</label>
+      <div class="error-class" th:errors="*{nickname}"></div>
+    </div>
+
+    <br/>
+
+    <div class="form-floating">
+      <input type="email" class="form-control" id="email" th:field="*{email}">
+      <label for="email">이메일</label>
+      <div class="error-class" th:errors="*{email}"></div>
+    </div>
+
+    <br/>
+
+    <div class="form-floating">
+      <select id="role" name="category" class="form-select" th:field="*{role}">
+        <option value="USER" >USER</option>
+        <option value="RIDER">RIDER</option>
+      </select>
+      <label for="role">카테고리</label>
+      <div class="error-class" th:errors="*{role}"></div>
+    </div>
+
+    <br/>
+    <button class="btn btn-small btn-outline-dark" type="submit">회원 가입</button>
+  </form>
+</div>
+</body>
+</html>
+
+<style>
+  .error-class {
+    color: red;
+  }
+  .error-input {
+    border-color: red;
+  }
+</style>

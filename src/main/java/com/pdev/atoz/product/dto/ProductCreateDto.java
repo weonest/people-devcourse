@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 public record ProductCreateDto(
         @NotBlank
         String productName,
-        @NotBlank
+        @NotNull
         Category category,
         @Min(1)
         int price,
