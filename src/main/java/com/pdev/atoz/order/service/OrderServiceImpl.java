@@ -40,8 +40,8 @@ public class OrderServiceImpl implements OrderService {
         orderItems.getItemList().forEach(item -> {
             Product product = productRepository.findById(item.getProductId()).orElseThrow();
             OrderItem orderItem = OrderItem.builder()
-                    .orderId(order)
-                    .productId(product)
+                    .order(order)
+                    .product(product)
                     .category(item.getCategory())
                     .quantity(item.getQuantity())
                     .totalPrice(item.getTotalPrice())
@@ -87,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     public void deleteOrderById(long orderId) {
-        orderItemRepository.deleteByOrderIdId(orderId);
+        orderItemRepository.deleteByOrderId(orderId);
         orderRepository.deleteById(orderId);
     }
 }

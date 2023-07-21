@@ -21,11 +21,11 @@ public class OrderItem {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "order_id")
-    private Order orderId;
+    private Order order;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "product_id")
-    private Product productId;
+    private Product product;
 
     @NotEmpty
     @Column(name = "category")
@@ -44,9 +44,9 @@ public class OrderItem {
     private LocalDateTime createdAt;
 
     @Builder
-    private OrderItem(Order orderId, Product productId, String category, int quantity, int totalPrice, LocalDateTime createdAt) {
-        this.orderId = orderId;
-        this.productId = productId;
+    private OrderItem(Order order, Product product, String category, int quantity, int totalPrice, LocalDateTime createdAt) {
+        this.order = order;
+        this.product = product;
         this.category = category;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
