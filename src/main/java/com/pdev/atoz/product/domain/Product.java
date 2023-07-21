@@ -18,27 +18,18 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
-    @Column(name = "product_name", unique = true)
+    @Column(unique = true)
     private String productName;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "Category")
     private Category category;
 
-    @NotNull
-    @Column(name = "price")
     private int price;
 
-    @Column(name = "description")
     private String description;
 
-    @NotNull
-    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
     @Builder

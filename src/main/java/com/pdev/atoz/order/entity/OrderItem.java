@@ -27,20 +27,12 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @NotEmpty
-    @Column(name = "category")
     private String category;
 
-    @NotNull
-    @Column(name = "quantity")
     private int quantity;
 
-    @NotNull
-    @Column(name = "total_price")
     private int totalPrice;
 
-    @NotNull
-    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Builder
