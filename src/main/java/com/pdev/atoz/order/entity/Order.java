@@ -2,6 +2,7 @@ package com.pdev.atoz.order.entity;
 
 import com.pdev.atoz.order.domain.Email;
 import com.pdev.atoz.order.domain.OrderStatus;
+import com.pdev.atoz.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +19,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private Email email;
 
     private String address;
@@ -28,7 +33,8 @@ public class Order {
     private LocalDateTime createdAt;
 
     @Builder
-    private Order(String email, String address, OrderStatus orderStatus, LocalDateTime createdAt) {
+    private Order(User user, String email, String address, OrderStatus orderStatus, LocalDateTime createdAt) {
+        this.user = user;
         this.email = new Email(email);
         this.address = address;
         this.orderStatus = orderStatus;

@@ -24,16 +24,18 @@
         </thead>
         <tbody>
         <tr th:each="order, num : ${orders}" th:object="${order}">
-            <td th:text="${num.count}"></td>
-            <td th:text="*{address}"></td>
-            <td th:text="*{orderStatus}"></td>
-            <td th:text="*{#temporals.format(createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-            <span th:if="*{orderStatus.equals('CANCELLED')}">
-            <td><a th:onclick="|deleteOrder(*{orderId()})|" class="btn btn-danger" type="button">삭제</a>
+      <span th:unless="*{orderStatus.equals('CANCELLED')}">
+      <td th:text="${num.count}"></td>
+      <td th:text="*{address}"></td>
+      <td th:text="*{orderStatus}"></td>
+      <td th:text="*{#temporals.format(createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+        <span th:if="*{orderStatus.equals('READY_FOR_DELIVERY')}">
+            <td><a th:onclick="|deliverOrder(*{orderId()})|" class="btn btn-info" type="button">배달하기</a>
             </span>
-            <span th:unless="*{orderStatus.equals('CANCELLED')}">
-            <td><a th:onclick="|cancel(*{orderId()})|" class="btn btn-warning" type="button">주문 취소</a></td>
-            </span>
+        <span th:if="*{orderStatus.equals('DELIVERING')}">
+            <td><a th:onclick="|completeOrder(*{orderId()})|" class="btn btn-success" type="button">배달완료</a></td>
+        </span>
+    </span>
         </tr>
         </tbody>
 
@@ -41,30 +43,30 @@
 </div>
 </body>
 <script>
-    function cancel(id) {
-        if (!confirm('주문을 취소하시겠습니까?')) {
+    function deliverOrder(id) {
+        if (!confirm('배달을 시작하겠습니까?')) {
             return false;
         }
         $.ajax({
-            url: '/api/orders/' + id,
+            url: '/api/riders/' + id + '/deliver',
             type: 'POST',
 
             success: function (result) {
-                window.location.href = '/session/info';
+                window.location.href = '/session/rider';
             },
         });
     }
 
-    function deleteOrder(id) {
+    function completeOrder(id) {
         if (!confirm('삭제하시겠습니까?')) {
             return false;
         }
         $.ajax({
-            url: '/api/orders/' + id,
-            type: 'DELETE',
+            url: '/api/riders/' + id + '/complete',
+            type: 'POST',
 
             success: function (result) {
-                window.location.href = '/session/info';
+                window.location.href = '/session/rider';
             },
         });
     }

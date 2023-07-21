@@ -1,8 +1,8 @@
 package com.pdev.atoz.user.dto;
 
-import com.pdev.atoz.order.domain.Email;
 import com.pdev.atoz.user.domain.User;
 import com.pdev.atoz.user.domain.UserRole;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -23,6 +23,7 @@ public class UserJoinRequest {
     @NotBlank(message = "닉네임을 입력해 주세요")
     private final String nickname;
 
+    @Email(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
     @NotBlank(message = "이메일을 입력해 주세요")
     private final String email;
 

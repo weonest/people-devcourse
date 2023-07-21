@@ -5,7 +5,7 @@ import lombok.Getter;
 
 
 @Getter
-public class OrderedItem {
+public class OrderedProduct {
 
     private final long productId;
 
@@ -16,10 +16,10 @@ public class OrderedItem {
     private final int totalPrice;
 
     @Builder
-    private OrderedItem(long productId,
-                        String category,
-                        int price,
-                        int quantity) {
+    private OrderedProduct(long productId,
+                           String category,
+                           int price,
+                           int quantity) {
         this.productId = productId;
         this.category = category;
         this.quantity = quantity;

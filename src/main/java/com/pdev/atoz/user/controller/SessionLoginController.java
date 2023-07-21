@@ -1,5 +1,7 @@
 package com.pdev.atoz.user.controller;
 
+import com.pdev.atoz.order.dto.OrderResponseDto;
+import com.pdev.atoz.order.service.OrderService;
 import com.pdev.atoz.user.domain.User;
 import com.pdev.atoz.user.domain.UserRole;
 import com.pdev.atoz.user.dto.UserJoinRequest;
@@ -14,14 +16,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/session")
 public class SessionLoginController {
 
     private final UserService userService;
+    private final OrderService orderService;
 
-    public SessionLoginController(UserService userService) {
+    public SessionLoginController(UserService userService, OrderService orderService) {
         this.userService = userService;
+        this.orderService = orderService;
     }
 
     @GetMapping
@@ -32,7 +38,7 @@ public class SessionLoginController {
         User loginUser = userService.getLoginUserById(userId);
 
         if (loginUser != null) {
-            model.addAttribute("nickname", loginUser.getNickname());
+            model.addAttribute("user", loginUser);
         }
 
         return "/users/home";
@@ -124,25 +130,32 @@ public class SessionLoginController {
             return "redirect:/session/login";
         }
 
+        List<OrderResponseDto> orders = orderService.findOrderByUserId(userId);
+
         model.addAttribute("user", loginUser);
+        model.addAttribute("orders", orders);
 
         return "/users/info";
     }
 
-    @ResponseBody
-    @GetMapping("/order")
-    public User order(@SessionAttribute(name = "userId", required = false) Long userId) {
-        System.out.println("userId = " + userId);
+    @GetMapping("/rider")
+    public String riderPage(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
+        model.addAttribute("loginType", "session");
+        model.addAttribute("pageName", "데브코스의 민족");
 
         User loginUser = userService.getLoginUserById(userId);
-        System.out.println("Log : " + loginUser.getId());
 
         if (loginUser == null) {
-            return null;
+            return "redirect:/session/login";
         }
-        
-        return loginUser;
+
+        List<OrderResponseDto> orders = orderService.findOrders();
+
+        model.addAttribute("orders", orders);
+
+        return "/users/order-list";
     }
+
 
     @GetMapping("/admin")
     public String adminPage(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {

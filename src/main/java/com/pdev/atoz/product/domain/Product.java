@@ -2,8 +2,6 @@ package com.pdev.atoz.product.domain;
 
 import com.pdev.atoz.product.dto.ProductUpdateDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

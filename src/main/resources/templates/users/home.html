@@ -11,14 +11,25 @@
 <body class="text-center">
 <div class="form-signin w-100 m-auto">
   <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
-  <div th:if="${nickname == null}">
+  <div th:if="${user == null}">
     <button class="btn btn-small btn-outline-dark" th:onclick="|location.href='@{/{loginType}/join (loginType=${loginType})}'|">회원 가입</button> <br/><br/>
     <button class="btn btn-small btn-outline-dark" th:onclick="|location.href='@{/{loginType}/login (loginType=${loginType})}'|">로그인</button>
   </div>
-  <div th:unless="${nickname == null}">
-    <h4>[[${nickname}]]님 환영합니다!</h4>
-    <button class="w-100 btn btn-lg btn-primary" th:onclick="|location.href='@{/{loginType}/info (loginType=${loginType})}'|">유저 정보</button> <br/><br/>
-    <a class="w-100 btn btn-lg btn-primary" th:href="@{http://localhost:3000(id=${id})}">주문 </a> <br/><br/>
+  <div th:if="${user} != null and ${user.getRole().toString().equals('USER')}">
+    <h4>[[${user.nickname}]]님 환영합니다!</h4>
+    <button class="w-100 btn btn-lg btn-primary" th:onclick="|location.href='@{/{loginType}/info (loginType=${loginType})}'|">주문 정보</button> <br/><br/>
+    <a class="w-100 btn btn-lg btn-primary" th:href="@{http://localhost:3000}">주문 </a> <br/><br/>
+    <button class="w-100 btn btn-lg btn-secondary my-3" th:onclick="|location.href='@{/{loginType}/logout (loginType=${loginType})}'|">로그아웃</button>
+  </div>
+
+  <div th:if="${user} != null and ${user.getRole().toString().equals('RIDER')}">
+    <h4>[[${user.nickname}]]님 환영합니다!</h4>
+    <button class="w-100 btn btn-lg btn-primary" th:onclick="|location.href='@{/{loginType}/rider (loginType=${loginType})}'|">배달 정보</button> <br/><br/>
+    <button class="w-100 btn btn-lg btn-secondary my-3" th:onclick="|location.href='@{/{loginType}/logout (loginType=${loginType})}'|">로그아웃</button>
+  </div>
+
+  <div th:if="${user} != null and ${user.getRole().toString() == 'ADMIN'}">
+    <h4>[[${user.nickname}]]님 환영합니다!</h4>
     <button class="w-100 btn btn-lg btn-success my-1" th:onclick="|location.href='@{/{loginType}/admin (loginType=${loginType})}'|">관리자 페이지</button> <br/><br/>
     <button class="w-100 btn btn-lg btn-secondary my-3" th:onclick="|location.href='@{/{loginType}/logout (loginType=${loginType})}'|">로그아웃</button>
   </div>

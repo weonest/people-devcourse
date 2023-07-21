@@ -20,4 +20,6 @@ public interface OrderService {
 
     void deleteOrderById(long id);
 
+    List<OrderResponseDto> findOrderByUserId(long userId);
+
 }

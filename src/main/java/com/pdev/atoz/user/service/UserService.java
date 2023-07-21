@@ -31,10 +31,12 @@ public class UserService {
     }
 
     public User login(UserLoginRequest request) {
-        User user = userRepository.findByLoginId(request.getLoginId()).orElseThrow();
+        Optional<User> user = userRepository.findByLoginId(request.getLoginId());
 
-        if (user.getPassword().equals(request.getPassword())) {
-            return user;
+        if (user.isPresent()) {
+            if (user.get().getPassword().equals(request.getPassword())) {
+                return user.get();
+            }
         }
         return null;
     }
