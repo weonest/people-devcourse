@@ -10,10 +10,10 @@ public class ProductMapper {
     private ProductMapper() {
     }
 
-    public static Product convertCreateToEntity(ProductCreateDto createDto, Category category, LocalDateTime createdAt) {
+    public static Product convertCreateToEntity(ProductCreateDto createDto, LocalDateTime createdAt) {
         return Product.builder()
                 .productName(createDto.productName())
-                .category(category)
+                .category(createDto.category())
                 .price(createDto.price())
                 .description(createDto.description())
                 .createdAt(createdAt)

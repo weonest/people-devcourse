@@ -10,4 +10,6 @@ public interface UserService {
     User login(UserLoginRequest request);
 
     User getLoginUserById(Long userId);
+
+    User getLoginUserByRole(String role);
 }

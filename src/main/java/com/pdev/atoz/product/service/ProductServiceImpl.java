@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @Override
     public ProductResponseDto create(ProductCreateDto createDto) {
-        Product product = ProductMapper.convertCreateToEntity(createDto, createDto.category(), LocalDateTime.now());
+        Product product = ProductMapper.convertCreateToEntity(createDto, LocalDateTime.now());
         productRepository.save(product);
         return ProductMapper.convertEntityToResponse(product);
     }

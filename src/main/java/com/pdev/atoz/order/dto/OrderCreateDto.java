@@ -13,7 +13,5 @@ public record OrderCreateDto (
         String address,
         @NotNull
         List<OrderedProduct> items
-
-
 ){
 }
