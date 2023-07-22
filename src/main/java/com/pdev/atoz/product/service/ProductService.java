@@ -18,5 +18,7 @@ public interface ProductService {
 
     List<ProductResponseDto> findProducts();
 
+    List<ProductResponseDto> findProductsByCategory(String category);
+
     void deleteProductById(long id);
 }

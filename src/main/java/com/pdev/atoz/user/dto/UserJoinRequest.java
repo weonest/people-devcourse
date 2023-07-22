@@ -1,6 +1,5 @@
 package com.pdev.atoz.user.dto;
 
-import com.pdev.atoz.user.domain.User;
 import com.pdev.atoz.user.domain.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

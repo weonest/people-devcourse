@@ -3,10 +3,9 @@ package com.pdev.atoz.user.controller;
 import com.pdev.atoz.order.dto.OrderResponseDto;
 import com.pdev.atoz.order.service.OrderService;
 import com.pdev.atoz.user.domain.User;
-import com.pdev.atoz.user.domain.UserRole;
 import com.pdev.atoz.user.dto.UserJoinRequest;
 import com.pdev.atoz.user.dto.UserLoginRequest;
-import com.pdev.atoz.user.service.UserService;
+import com.pdev.atoz.user.service.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -22,11 +21,11 @@ import java.util.List;
 @RequestMapping("/session")
 public class SessionLoginController {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final OrderService orderService;
 
-    public SessionLoginController(UserService userService, OrderService orderService) {
-        this.userService = userService;
+    public SessionLoginController(UserServiceImpl userServiceImpl, OrderService orderService) {
+        this.userServiceImpl = userServiceImpl;
         this.orderService = orderService;
     }
 
@@ -35,12 +34,13 @@ public class SessionLoginController {
         model.addAttribute("loginType", "session");
         model.addAttribute("pageName", "데브코스의 민족");
 
-        User loginUser = userService.getLoginUserById(userId);
-
-        if (loginUser != null) {
-            model.addAttribute("user", loginUser);
+        try {
+            User loginUser = userServiceImpl.getLoginUserById(userId);
+            if (loginUser != null) {
+                model.addAttribute("user", loginUser);
+            }
+        } catch (RuntimeException e) {
         }
-
         return "/users/home";
     }
 
@@ -66,7 +66,7 @@ public class SessionLoginController {
             return "/users/join";
         }
 
-        userService.userJoin(userJoinRequest);
+        userServiceImpl.userJoin(userJoinRequest);
 
         return "redirect:/session";
     }
@@ -81,26 +81,25 @@ public class SessionLoginController {
         return "/users/login";
     }
 
+
     @PostMapping("/login")
     public String join(@ModelAttribute UserLoginRequest userLoginRequest, BindingResult bindingResult, HttpServletRequest httpServletRequest, Model model) {
         model.addAttribute("loginType", "session");
         model.addAttribute("pageName", "데브코스의 민족");
 
-        User loginUser = userService.login(userLoginRequest);
+        try {
+            User loginUser = userServiceImpl.login(userLoginRequest);
 
-        if (loginUser == null) {
+            httpServletRequest.getSession().invalidate();
+            HttpSession session = httpServletRequest.getSession(true); // 세션이 없으면 생성
+
+            session.setAttribute("userId", loginUser.getId());
+            session.setMaxInactiveInterval(1800);
+
+        } catch (RuntimeException e) {
             bindingResult.reject("로그인 실패", "로그인 아이디 또는 비밀번호가 틀렸습니다.");
-        }
-
-        if (bindingResult.hasErrors()) {
             return "/users/login";
         }
-        // 세션을 생성하기 전 기존 세션 파기
-        httpServletRequest.getSession().invalidate();
-        HttpSession session = httpServletRequest.getSession(true); // 세션이 없으면 생성
-
-        session.setAttribute("userId", loginUser.getId());
-        session.setMaxInactiveInterval(1800);
 
         return "redirect:/session";
     }
@@ -124,7 +123,7 @@ public class SessionLoginController {
         model.addAttribute("loginType", "session");
         model.addAttribute("pageName", "데브코스의 민족");
 
-        User loginUser = userService.getLoginUserById(userId);
+        User loginUser = userServiceImpl.getLoginUserById(userId);
 
         if (loginUser == null) {
             return "redirect:/session/login";
@@ -143,7 +142,7 @@ public class SessionLoginController {
         model.addAttribute("loginType", "session");
         model.addAttribute("pageName", "데브코스의 민족");
 
-        User loginUser = userService.getLoginUserById(userId);
+        User loginUser = userServiceImpl.getLoginUserById(userId);
 
         if (loginUser == null) {
             return "redirect:/session/login";
@@ -156,23 +155,4 @@ public class SessionLoginController {
         return "/users/order-list";
     }
 
-
-    @GetMapping("/admin")
-    public String adminPage(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
-
-        model.addAttribute("loginType", "session");
-        model.addAttribute("pageName", "데브코스의 민족");
-
-        User loginUser = userService.getLoginUserById(userId);
-
-        if (loginUser == null) {
-            return "redirect:/session/login";
-        }
-
-        if (!loginUser.getRole().equals(UserRole.ADMIN)) {
-            return "redirect:/session";
-        }
-
-        return "product-page";
-    }
 }

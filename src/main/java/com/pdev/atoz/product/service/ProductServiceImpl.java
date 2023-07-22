@@ -33,20 +33,23 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @Override
     public ProductResponseDto update(ProductUpdateDto updateDto) {
-        Product product = productRepository.findById(updateDto.productId()).get();
+        Product product = productRepository.findById(updateDto.productId())
+                .orElseThrow(IllegalArgumentException::new);
         product.changeProduct(updateDto);
         return ProductMapper.convertEntityToResponse(product);
     }
 
     @Override
     public ProductResponseDto findProductById(long id) {
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(id)
+                .orElseThrow(IllegalArgumentException::new);
         return ProductMapper.convertEntityToResponse(product);
     }
 
     @Override
     public ProductResponseDto findProductByProductName(String productName) {
-        Product product = productRepository.findByProductName(productName).get();
+        Product product = productRepository.findByProductName(productName)
+                .orElseThrow(IllegalArgumentException::new);
         return ProductMapper.convertEntityToResponse(product);
     }
 
@@ -58,9 +61,17 @@ public class ProductServiceImpl implements ProductService {
                 .toList();
     }
 
+    @Override
+    public List<ProductResponseDto> findProductsByCategory(String category) {
+        return productRepository.findByCategory(category).stream()
+                .map(ProductMapper::convertEntityToResponse)
+                .toList();
+    }
+
     @Transactional
     @Override
     public void deleteProductById(long id) {
         productRepository.deleteById(id);
     }
+
 }

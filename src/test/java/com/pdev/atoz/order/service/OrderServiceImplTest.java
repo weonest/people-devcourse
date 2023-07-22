@@ -1,7 +1,7 @@
 package com.pdev.atoz.order.service;
 
-import com.pdev.atoz.order.domain.OrderedProduct;
 import com.pdev.atoz.order.domain.OrderStatus;
+import com.pdev.atoz.order.domain.OrderedProduct;
 import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.dto.OrderResponseDto;
 import com.pdev.atoz.product.domain.Category;
@@ -10,7 +10,10 @@ import com.pdev.atoz.product.repository.ProductRepository;
 import com.pdev.atoz.user.domain.User;
 import com.pdev.atoz.user.domain.UserRole;
 import com.pdev.atoz.user.repository.UserRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional

@@ -2,7 +2,9 @@ package com.pdev.atoz.user.domain;
 
 import com.pdev.atoz.order.domain.Email;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter

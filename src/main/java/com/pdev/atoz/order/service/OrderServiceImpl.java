@@ -1,7 +1,7 @@
 package com.pdev.atoz.order.service;
 
-import com.pdev.atoz.order.domain.OrderProducts;
 import com.pdev.atoz.order.domain.OrderMapper;
+import com.pdev.atoz.order.domain.OrderProducts;
 import com.pdev.atoz.order.dto.OrderCreateDto;
 import com.pdev.atoz.order.dto.OrderResponseDto;
 import com.pdev.atoz.order.entity.Order;
@@ -94,6 +94,12 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderResponseDto> findOrders() {
         List<Order> orders = orderRepository.findAll();
         return orders.stream()
+                .map(OrderMapper::convertEntityToResponse)
+                .toList();
+    }
+
+    public List<OrderResponseDto> findOrdersByOrderStatus(String orderStatus) {
+        return orderRepository.findByOrderStatus(orderStatus).stream()
                 .map(OrderMapper::convertEntityToResponse)
                 .toList();
     }
