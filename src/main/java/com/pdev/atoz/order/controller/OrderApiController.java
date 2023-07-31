@@ -43,4 +43,16 @@ public class OrderApiController {
         orderService.cancelOrder(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping("/{id}/deliver")
+    public ResponseEntity<OrderResponseDto> orderDeliver(@PathVariable long id) {
+        OrderResponseDto response = orderService.deliverOrder(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/complete")
+    public ResponseEntity<OrderResponseDto> orderComplete(@PathVariable long id) {
+        OrderResponseDto response = orderService.completeOrder(id);
+        return ResponseEntity.ok(response);
+    }
 }

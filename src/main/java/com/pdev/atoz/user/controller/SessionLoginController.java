@@ -1,5 +1,6 @@
 package com.pdev.atoz.user.controller;
 
+import com.pdev.atoz.global.exception.DuplicateValueException;
 import com.pdev.atoz.order.dto.OrderResponseDto;
 import com.pdev.atoz.order.service.OrderService;
 import com.pdev.atoz.user.domain.User;
@@ -66,7 +67,12 @@ public class SessionLoginController {
             return "/users/join";
         }
 
-        userServiceImpl.userJoin(userJoinRequest);
+        try {
+            userServiceImpl.userJoin(userJoinRequest);
+        } catch (DuplicateValueException e) {
+            bindingResult.addError(new FieldError("joinRequest", e.getField(), e.getMessage()));
+            return "/users/join";
+        }
 
         return "redirect:/session";
     }

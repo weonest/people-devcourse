@@ -1,5 +1,6 @@
 package com.pdev.atoz.user.service;
 
+import com.pdev.atoz.global.exception.DuplicateValueException;
 import com.pdev.atoz.user.domain.User;
 import com.pdev.atoz.user.dto.UserJoinRequest;
 import com.pdev.atoz.user.dto.UserLoginRequest;
@@ -45,19 +46,27 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    public User getLoginUserByRole(String role) {
+        User user = userRepository.findByRole(role)
+                .orElseThrow(NoSuchElementException::new);
+        return user;
+    }
+
     private void checkLoginIdDuplicate(String loginId) {
-        Optional<User> user = userRepository.findByLoginId(loginId);
-        if (user.isPresent()) throw new IllegalArgumentException();
+        if (userRepository.existsByLoginId(loginId))
+            throw new DuplicateValueException("loginId");
     }
 
     private void checkEmailDuplicate(String email) {
-        Optional<User> user = userRepository.findByEmailMailAddress(email);
-        if (user.isPresent()) throw new IllegalArgumentException();
+        if (userRepository.existsByEmailMailAddress(email)) {
+            throw new DuplicateValueException("email");
+        }
     }
 
     private void checkNicknameDuplicate(String nickname) {
-        Optional<User> user = userRepository.findByNickname(nickname);
-        if (user.isPresent()) throw new IllegalArgumentException();
+        if (userRepository.existsByNickname(nickname)) {
+            throw new DuplicateValueException("nickname");
+        }
     }
 
     private void validateRequest(UserJoinRequest request) {

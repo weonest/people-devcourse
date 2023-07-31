@@ -48,7 +48,7 @@
             return false;
         }
         $.ajax({
-            url: '/api/riders/' + id + '/deliver',
+            url: '/api/orders/' + id + '/deliver',
             type: 'POST',
 
             success: function (result) {
@@ -62,7 +62,7 @@
             return false;
         }
         $.ajax({
-            url: '/api/riders/' + id + '/complete',
+            url: '/api/orders/' + id + '/complete',
             type: 'POST',
 
             success: function (result) {

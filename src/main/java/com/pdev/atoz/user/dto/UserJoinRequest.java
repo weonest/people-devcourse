@@ -22,7 +22,6 @@ public class UserJoinRequest {
     @NotBlank(message = "닉네임을 입력해 주세요")
     private final String nickname;
 
-    @Email(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
     @NotBlank(message = "이메일을 입력해 주세요")
     private final String email;
 
